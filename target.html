@@ -1,0 +1,161 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <title>Gun / Target sample</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta name="viewport" content="width=device-width,user-scalable=no" /> 
+
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+  <style> 
+  body {
+    background-color: white;
+    color: black;
+    font-family: Helvetica, Verdana, Sans Serif;
+    font-size: 10px;
+  }
+
+  #bullet {
+  	width: 30px;
+  	height: 30px;
+    background-image: url("crosshairs.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  	position:absolute;
+  	top: -50px;
+  	left: -50px;
+  }
+  </style> 
+
+  <script>
+  // Calibration coordinates left upper
+  var clx = 0,
+  	  cly = 0;
+
+  // Calibration coordinates right lower
+  var crx = 0,
+      cry = 0;
+
+  // coefficient to apply for determining the coordinates on the screen
+  // It's based on client size and calibration coordinates
+  var coefx = 0,
+  	  coefy = 0;
+
+  // Position of the "bullet" on the screen
+  var x = 0;
+  var y = 0;
+
+  // gyroscope coordinates received
+  var alpha = 0;
+  var beta = 0;
+  
+  // frequency of the position calculation (in ms)
+  var delay = 10;
+  
+  window.onload = function() {
+  	var socket = io();
+	  setInterval(function() { 
+		  var bullet = document.getElementById("bullet");
+
+      // I do apply a low pass filter on the calculated coordinates to smoothen the effect
+		  y = filterY.process(Math.abs(cly - beta)*coefy);
+		  x = filterX.process(Math.abs(clx - alpha)*coefx);
+		
+      // Test if the calibration has been done
+		  if(coefx > 0){
+			  bullet.style.top = y + "px";
+			  bullet.style.left = x + "px";
+			  document.getElementById("pos").innerHTML = "Calibration left upper: <br/>alpha=" + clx + "<br/>beta=" + cly + "<br/><br/>Calibration  right lower: <br/>alpha=" + crx + "<br/>beta=" + cry + "<br/><br/> Gyroscope coo: <br/>alpha=" + alpha + "<br/>beta=" + beta + "<br/><br/>Coo on screen: x=" + x + "<br />y=" + y;
+		  }
+	  }, delay);
+  };
+  </script> 
+
+</head> 
+ 
+<body> 
+  <div id="content">
+      <div id="yes"> 
+          <div id="pos">x=0<br />y=0</div>
+          <div id="message"></div>
+          <div id="bullet"></div> 
+      </div> 
+  </div>
+  <script>
+    var socket = io();
+
+    socket.on('coo', function(msg){
+    	msg = JSON.parse(msg);
+      alpha = trigoGyro.check(msg.alpha);
+	    beta = msg.beta;
+    });
+
+    socket.on('caliberleft', function(msg){
+    	msg = JSON.parse(msg);
+      clx = msg.alpha;
+      cly = msg.beta;
+    });
+
+    socket.on('caliberright', function(msg){
+    	msg = JSON.parse(msg);
+      crx = msg.alpha;
+		  cry = msg.beta;
+
+  		// I'm on a trigonometry circle.
+      // If crx > clx, I have to "reset" the crx on the trigo circle (substracting 360°)
+  		if(crx > clx) trigoGyro.revert(true);
+
+      crx = trigoGyro.check(crx);
+
+  		// coefficient calculation
+  		coefx = document.documentElement.clientWidth/Math.abs(crx - clx);
+  		coefy = document.documentElement.clientHeight/Math.abs(cry - cly);
+    });
+
+    socket.on('fire', function(msg){
+    	msg = JSON.parse(msg);
+    
+      // Test if the calibration has been done
+      if(coefx > 0){
+        document.getElementById("message").innerHTML = "<br/>you shot these coo : x=" + Math.abs(clx - msg.alpha)*coefx + "&nbsp;y=" + Math.abs(cly - msg.beta)*coefy;
+      }
+      
+    });
+
+    // The trigonometry circle can trick you !
+    // This Class is here to recalculate the alpha value
+    // depending on the calibration and the relative position on the trigo circle
+    function TrigoGyro(revert) {
+      this.x = false;
+    }
+
+    TrigoGyro.prototype.check = function (input) {
+      if(this.revert && input > clx){
+        return Math.abs(360-input)+clx; 
+      }
+
+      return input;
+    }
+
+    TrigoGyro.prototype.revert = function (input) {
+      this.x = input;
+    }
+
+    // This is the low pass filter Class I'll use to smoothen the visual effect on screen
+    function Filter() {
+       this.a = 0.8;
+       this.b = 1.0 - this.a;
+       this.z = 0; 
+    }
+
+    Filter.prototype.process = function (input) {
+       this.z = (input * this.b) + (this.z * this.a); 
+       return this.z;
+    }
+
+    var filterX = new Filter();
+    var filterY = new Filter();
+    var trigoGyro = new TrigoGyro();
+    </script>
+</body> 
+</html> 

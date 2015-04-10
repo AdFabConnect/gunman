@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <title>Gyroscope emiter</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta name="viewport" content="width=device-width,user-scalable=no" /> 
+
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script>
+  var coo = {alpha: 0, beta: 0, gamma: 0};
+  window.onload = function() {
+  	var socket = io();
+  	if(window.DeviceOrientationEvent) {
+  	  window.ondeviceorientation = function(event) {
+  		  coo = { alpha: event.alpha, beta: event.beta, gamma: event.gamma }
+      	socket.emit('coo', JSON.stringify(coo));
+      }
+  	}
+  };
+  </script>
+</head> 
+ 
+<body> 
+  <div id="content"> 
+      <div onclick="javascript:socket.emit('caliberleft', JSON.stringify(coo));">valide gauche</div>
+      <br/><br/>
+      <div onclick="javascript:socket.emit('caliberright', JSON.stringify(coo));">valide droit</div>
+      <br/><br/>
+      <div onclick="javascript:socket.emit('fire', JSON.stringify(coo));">TIR</div>
+  </div>
+  <script>
+    var socket = io();
+  </script>
+</body> 
+</html> 

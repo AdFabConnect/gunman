@@ -1,0 +1,9 @@
+{
+  "name": "socket-gunman",
+  "version": "1.0.0",
+  "description": "Your mobile as a gun, your laptop as a target",
+  "dependencies": {
+    "express": "4.10.2",
+    "socket.io": "1.2.0"
+  }
+}
