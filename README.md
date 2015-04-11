@@ -1,12 +1,13 @@
 # Gyroscope Remote
 Your mobile as a gun, your laptop as a target !
+Learn how to synchronize your mobile gyroscope with a crosshair on a remote screen !
 
 ## Introduction
 This PoC has been used for one of our amazing famo.us mixed mode demos. 
 It was the episode 2 of our *AdFabulous Famo.us* show in March-April 2015 demoing what you can do with famo.us Mixed Mode + nodeJS + SocketIO.
 
 ## What
-This Gunman repo contains only the socketJS + nodeJS stuff (we're waiting the official release of famo.us to show you more !).
+This Gunman repo contains only the socketJS + nodeJS stuff (we're waiting for the official release of famo.us to show you more !).
 It illustrates how you can use your mobile device to precisely interact with a pointer on a desktop/laptop/TV/whatever remote screen.
 
 ## How
