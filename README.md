@@ -12,14 +12,11 @@ It illustrates how you can use your mobile device to precisely interact with a p
 
 ## How
 Here is what is used to make it happen :
-- The server :
--- NodeJS, express, socket.io : Nothing particular here. We define 3 routes. One for the gun (the mobile), one for the target (your remote screen) and the last for an image. We're listening for 4 events.
+- The server: NodeJS, express, socket.io : Nothing particular here. We define 3 routes. One for the gun (the mobile), one for the target (your remote screen) and the last for an image. We're listening for 4 events.
 
-- The gun :
--- The gyroscope is used to send data when device orientation changes.
+- The gun: The gyroscope is used to send data when device orientation changes.
 
-- The target :
--- the target receives the different events and calculate the position of the "crosshair" based on Gyroscope signal.
+- The target: The target receives the different events and calculate the position of the "crosshair" based on Gyroscope signal.
 
 ## Installation
 Clone this repo then `npm install` it
