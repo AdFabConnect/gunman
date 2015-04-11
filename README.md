@@ -31,8 +31,8 @@ Clone this repo then `npm install` it
 
 ## Code explained
 The Gyroscope coordinates have to be "translated" into coordinates on the screen. 2 main operations have to be done :
-1. The calibration of the gyroscope on your screen: The alpha is a position in ° on the trigonometric circle. So depending on where your screen is located compared to the North, you'll have to apply the right calculation. This is the role of the TrigoGyro class
-2. The ratio to apply based on the width of your screen: The calibration gives you alpha and beta of the upper left and lower right corners of your screen. Knowing the width and height of your screen, you're then able to calculate the ratio to apply to determine the position of the crosshair on your screen.
-3. The smoothness of the crosshair's move on the screen : Once again, Myles (https://github.com/TheAlphaNerd) from famo.us gave me a good advice. The low pass filter. So Filter class is this low pass filter. (you should go and see https://github.com/gregorybesson/blow if you're interested in interacting with your device with a blow in HTML5).
+- The calibration of the gyroscope on your screen: The alpha is a position in ° on the trigonometric circle. So depending on where your screen is located compared to the North, you'll have to apply the right calculation. This is the role of the TrigoGyro class
+- The ratio to apply based on the width of your screen: The calibration gives you alpha and beta of the upper left and lower right corners of your screen. Knowing the width and height of your screen, you're then able to calculate the ratio to apply to determine the position of the crosshair on your screen.
+- The smoothness of the crosshair's move on the screen : Once again, Myles (https://github.com/TheAlphaNerd) from famo.us gave me a good advice. The low pass filter. So Filter class is this low pass filter. (you should go and see https://github.com/gregorybesson/blow if you're interested in interacting with your device with a blow in HTML5).
 
 As usually, don't hesitate to ask questions or improve the code or criticize or suggest improvements !
