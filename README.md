@@ -30,6 +30,8 @@ Clone this repo then `npm install` it
 6. And if you shoot, you'll display coordinates of the shoot on the screen
 
 ## Code explained
+The code is not cleaned up but I've put comments for you to understand ! This way you can easily reuse the code for your own stuff.
+
 The Gyroscope coordinates have to be "translated" into coordinates on the screen. 2 main operations have to be done :
 - The calibration of the gyroscope on your screen: The alpha is a position in ° on the trigonometric circle. So depending on where your screen is located compared to the North, you'll have to apply the right calculation. This is the role of the TrigoGyro class
 - The ratio to apply based on the width of your screen: The calibration gives you alpha and beta of the upper left and lower right corners of your screen. Knowing the width and height of your screen, you're then able to calculate the ratio to apply to determine the position of the crosshair on your screen.
