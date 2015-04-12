@@ -6,7 +6,7 @@ Learn how to synchronize your mobile gyroscope with a crosshair on a remote scre
 This PoC has been used for one of our amazing famo.us mixed mode demos. 
 It was the episode 2 of our *AdFabulous Famo.us* show in March-April 2015 demoing what you can do with famo.us Mixed Mode + nodeJS + SocketIO.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=OAuT4nHf70Y" target="_blank"><img src="http://img.youtube.com/vi/OAuT4nHf70Y/0.jpg" alt="Demo" width="360" height="270" border="10" /></a>
+<div style="margin: 0 auto;"><a href="http://www.youtube.com/watch?feature=player_embedded&v=OAuT4nHf70Y" target="_blank"><img src="http://img.youtube.com/vi/OAuT4nHf70Y/0.jpg" alt="Demo" width="360" height="270" border="10" /></a></div>
 
 ## What
 This Gunman repo contains only the socketJS + nodeJS stuff (we're waiting for the official release of famo.us to show you more !).
